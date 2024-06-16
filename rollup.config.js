@@ -17,7 +17,7 @@ export default {
     esbuild({
       charset: "utf8",
       target: "es2017",
-      // minify: true,
+      minify: true,
     }),
   ],
   // treeshake: false,
