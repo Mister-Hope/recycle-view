@@ -15,7 +15,7 @@
   "main": "dist/index.js",
   "miniprogram": "dist",
   "scripts": {
-    "build": "tsx scripts/bundle.ts && cpx \"src/**/*.{wxml,wxss,json}\" dist",
+    "build": "rollup -c rollup.config.js && cpx \"src/**/*.{wxml,wxss,json}\" dist",
     "copy:demo": "cpx \"dist/**/*\" demo/components",
     "clean": "rimraf dist"
   },

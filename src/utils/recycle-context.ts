@@ -609,7 +609,7 @@ export class RecycleContext<T> {
     return this;
   }
 
-  append(...args) {
+  append(list, cb) {
     this.checkComp();
 
     const id = this.id;

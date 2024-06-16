@@ -6,7 +6,7 @@ data = data.response.data;
 const systemInfo = wx.getSystemInfoSync();
 
 // 提交wx.createRecycleContext能力
-const createRecycleContext = require("../../components/index.js");
+const { createRecycleContext } = require("../../components/index.js");
 
 Page({
   data: {
