@@ -1,59 +1,58 @@
-declare namespace recycleContext {
-  interface itemSize {
-    width: number;
-    height: number;
-  }
+type Component = any;
+type Page = any;
 
-  type Component = any;
-  type Page = any;
+interface SizeInfo {
+  width: number;
+  height: number;
+}
 
-  type itemSizeFunc<T> = (item: T, index: number) => itemSize;
+type SizeGetter<T> = (item: T, index: number) => SizeInfo;
 
-  interface options<T> {
-    id: string;
-    dataKey: string;
-    page: Component | Page;
-    itemSize: itemSizeFunc<T> | itemSize;
-    useInPage?: boolean;
-    root?: Page;
-  }
+interface RecycleContextOptions<T> {
+  id: string;
+  dataKey: string;
+  page: Component | Page;
+  itemSize: SizeGetter<T> | SizeInfo;
+  useInPage?: boolean;
+  root?: Page;
+  placeholderClass?: string;
+}
 
-  interface position {
-    left: number;
-    top: number;
-    width: number;
-    height: number;
-  }
+interface Position {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
 
-  interface RecycleContext<T> {
-    append(list: T[], callback?: () => void): RecycleContext<T>;
-    appendList(list: T[], callback?: () => void): RecycleContext<T>;
-    splice(
-      begin: number,
-      deleteCount: number,
-      appendList: T[],
-      callback?: () => void,
-    ): RecycleContext<T>;
-    updateList(
-      beginIndex: number,
-      list: T[],
-      callback?: () => void,
-    ): RecycleContext<T>;
-    update(
-      beginIndex: number,
-      list: T[],
-      callback?: () => void,
-    ): RecycleContext<T>;
-    destroy(): RecycleContext<T>;
-    forceUpdate(callback: () => void, reinitSlot: boolean): RecycleContext<T>;
-    getBoundingClientRect(index: number | undefined): position | position[];
-    getScrollTop(): number;
-    transformRpx(rpx: number, addPxSuffix?: string): number;
-    getViewportItems(inViewportPx: number): T[];
-    getList(): T[];
-  }
+interface RecycleContext<T> {
+  append(list: T[], callback?: () => void): RecycleContext<T>;
+  appendList(list: T[], callback?: () => void): RecycleContext<T>;
+  splice(
+    begin: number,
+    deleteCount: number,
+    appendList: T[],
+    callback?: () => void,
+  ): RecycleContext<T>;
+  updateList(
+    beginIndex: number,
+    list: T[],
+    callback?: () => void,
+  ): RecycleContext<T>;
+  update(
+    beginIndex: number,
+    list: T[],
+    callback?: () => void,
+  ): RecycleContext<T>;
+  destroy(): RecycleContext<T>;
+  forceUpdate(callback: () => void, reInitSlot: boolean): RecycleContext<T>;
+  getBoundingClientRect(index: number | undefined): Position | Position[];
+  getScrollTop(): number;
+  transformRpx(rpx: number, addPxSuffix?: string): number;
+  getViewportItems(inViewportPx: number): T[];
+  getList(): T[];
 }
 
 export function createRecycleContext<T>(
-  op: recycleContext.options<T>,
-): recycleContext.RecycleContext<T>;
+  Options: RecycleContextOptions<T>,
+): RecycleContext<T>;
