@@ -1,16 +1,14 @@
-<!--components/recycle-view/recycle-view.wxml-->
 <view
-  bindtouchstart="_beginToScroll"
-  style="height:{{useInPage ? totalHeight + (hasBeforeSlotHeight ? beforeSlotHeight : 0) + (hasAfterSlotHeight ? afterSlotHeight : 0) : height}}px;width:{{width}}px;transform:translateZ(0);-webkit-transform:translateZ(0);"
-  id="content"
   class="wrap"
+  id="content"
+  style="width:{{width}}px;height:{{useInPage ? totalHeight + (hasBeforeSlotHeight ? beforeSlotHeight : 0) + (hasAfterSlotHeight ? afterSlotHeight : 0) : height}}px;transform:translateZ(0);"
+  bind:touchstart="_beginToScroll"
 >
   <scroll-view
     bindscroll="_scrollViewDidScroll"
     class="content"
-    style="height:100%;position: relative;"
+    style="position:relative;height:100%"
     scroll-y="{{useInPage ? false : scrollY}}"
-    scroll-x="{{false}}"
     upper-threshold="{{upperThreshold}}"
     lower-threshold="{{lowerThreshold}}"
     scroll-top="{{innerScrollTop}}"
