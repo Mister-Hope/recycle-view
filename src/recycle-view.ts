@@ -1,16 +1,122 @@
+import { transformRpx } from "./utils/transformRpx.js";
+
 const DEFAULT_SHOW_SCREENS = 4;
 const RECT_SIZE = 200;
 const systemInfo = wx.getSystemInfoSync();
 const DEBUG = false;
-const transformRpx = require("./utils/transformRpx").transformRpx;
 
 Component({
+  /**
+   * 组件的属性列表
+   */
+  properties: {
+    width: {
+      type: Number,
+      value: systemInfo.windowWidth,
+      public: true,
+      observer: "_widthChanged",
+    },
+    height: {
+      type: Number,
+      value: systemInfo.windowHeight,
+      public: true,
+      observer: "_heightChanged",
+    },
+
+    debug: {
+      type: Boolean,
+      value: false,
+    },
+
+    scrollY: {
+      type: Boolean,
+      value: true,
+    },
+
+    batch: {
+      type: Boolean,
+      value: false,
+      public: true,
+      observer: "_recycleInnerBatchDataChanged",
+    },
+
+    batchKey: {
+      type: String,
+      value: "batchSetRecycleData",
+      public: true,
+    },
+
+    scrollTop: {
+      type: Number,
+      value: 0,
+      public: true,
+      observer: "_scrollTopChanged",
+      observeAssignments: true,
+    },
+
+    // 距顶部/左边多远时，触发 bindscrolltoupper
+    upperThreshold: {
+      type: Number,
+      value: 50,
+      public: true,
+    },
+
+    // 距底部/右边多远时，触发 bindscrolltolower
+    lowerThreshold: {
+      type: Number,
+      value: 50,
+      public: true,
+    },
+
+    scrollToIndex: {
+      type: Number,
+      public: true,
+      value: 0,
+      observer: "_scrollToIndexChanged",
+      observeAssignments: true,
+    },
+
+    scrollWithAnimation: {
+      type: Boolean,
+      public: true,
+      value: false,
+    },
+
+    enableBackToTop: {
+      type: Boolean,
+      public: true,
+      value: false,
+    },
+
+    // 是否节流，默认是
+    throttle: {
+      type: Boolean,
+      public: true,
+      value: true,
+    },
+
+    placeholderImage: {
+      type: String,
+      public: true,
+      value: "",
+    },
+
+    screen: {
+      // 默认渲染多少屏的数据
+      type: Number,
+      public: true,
+      value: DEFAULT_SHOW_SCREENS,
+    },
+  },
+
   options: {
     multipleSlots: true, // 在组件定义时的选项中启用多slot支持
   },
+
   relations: {
-    "../recycle-item/recycle-item": {
+    "./recycle-item": {
       type: "child", // 关联的目标节点应为子节点
+
       linked(target) {
         // 检查第一个的尺寸就好了吧
         if (!this._hasCheckSize) {
@@ -29,7 +135,6 @@ Component({
                     rect &&
                     (rect.width !== size.width || rect.height !== size.height)
                   ) {
-                    // eslint-disable-next-line no-console
                     console.warn(
                       "[recycle-view] the size in <recycle-item> is not the same with param " +
                         `itemSize, expect {width: ${rect.width}, height: ${rect.height}} but got ` +
@@ -46,95 +151,6 @@ Component({
       },
     },
   },
-  /**
-   * 组件的属性列表
-   */
-  properties: {
-    debug: {
-      type: Boolean,
-      value: false,
-    },
-    scrollY: {
-      type: Boolean,
-      value: true,
-    },
-    batch: {
-      type: Boolean,
-      value: false,
-      public: true,
-      observer: "_recycleInnerBatchDataChanged",
-    },
-    batchKey: {
-      type: String,
-      value: "batchSetRecycleData",
-      public: true,
-    },
-    scrollTop: {
-      type: Number,
-      value: 0,
-      public: true,
-      observer: "_scrollTopChanged",
-      observeAssignments: true,
-    },
-    height: {
-      type: Number,
-      value: systemInfo.windowHeight,
-      public: true,
-      observer: "_heightChanged",
-    },
-    width: {
-      type: Number,
-      value: systemInfo.windowWidth,
-      public: true,
-      observer: "_widthChanged",
-    },
-    // 距顶部/左边多远时，触发bindscrolltoupper
-    upperThreshold: {
-      type: Number,
-      value: 50,
-      public: true,
-    },
-    // 距底部/右边多远时，触发bindscrolltolower
-    lowerThreshold: {
-      type: Number,
-      value: 50,
-      public: true,
-    },
-    scrollToIndex: {
-      type: Number,
-      public: true,
-      value: 0,
-      observer: "_scrollToIndexChanged",
-      observeAssignments: true,
-    },
-    scrollWithAnimation: {
-      type: Boolean,
-      public: true,
-      value: false,
-    },
-    enableBackToTop: {
-      type: Boolean,
-      public: true,
-      value: false,
-    },
-    // 是否节流，默认是
-    throttle: {
-      type: Boolean,
-      public: true,
-      value: true,
-    },
-    placeholderImage: {
-      type: String,
-      public: true,
-      value: "",
-    },
-    screen: {
-      // 默认渲染多少屏的数据
-      type: Number,
-      public: true,
-      value: DEFAULT_SHOW_SCREENS,
-    },
-  },
 
   /**
    * 组件的初始数据
@@ -148,6 +164,7 @@ Component({
     totalHeight: 0,
     useInPage: false,
   },
+
   attached() {
     if (this.data.placeholderImage) {
       this.setData({

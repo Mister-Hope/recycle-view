@@ -1,7 +1,7 @@
 /* eslint complexity: ["error", {"max": 50}] */
-const recycleData = require("./recycle-data");
+import { recycleData } from "./recycle-data.js";
 
-module.exports = function (e, cb) {
+export const viewPortChange = function (e, cb) {
   const detail = e.detail;
   // console.log('data change transfer use time', Date.now() - e.detail.timeStamp)
   let newList = [];
@@ -43,19 +43,4 @@ module.exports = function (e, cb) {
       cb();
     }
   });
-  // Fix #1
-  // 去掉了batchSetDataKey，支持一个页面内显示2个recycle-view
-  // const groupSetData = () => {
-  //   this.setData(obj)
-  //   comp._recycleInnerBatchDataChanged(() => {
-  //     if (typeof cb === 'function') {
-  //       cb()
-  //     }
-  //   })
-  // }
-  // if (typeof this.groupSetData === 'function') {
-  //   this.groupSetData(groupSetData)
-  // } else {
-  //   groupSetData()
-  // }
 };
