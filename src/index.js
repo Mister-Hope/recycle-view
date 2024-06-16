@@ -2,7 +2,7 @@
  * recycle-view组件的api使用
  * 提供wx.createRecycleContext进行管理功能
  */
-const RecycleContext = require('./utils/recycle-context.js')
+const RecycleContext = require('./utils/recycle-context')
 
 /**
  * @params options参数是object对象，展开的结构如下

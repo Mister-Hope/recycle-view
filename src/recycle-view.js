@@ -4,7 +4,7 @@ const DEFAULT_SHOW_SCREENS = 4
 const RECT_SIZE = 200
 const systemInfo = wx.getSystemInfoSync()
 const DEBUG = false
-const transformRpx = require('./utils/transformRpx.js').transformRpx
+const transformRpx = require('./utils/transformRpx').transformRpx
 
 Component({
   options: {

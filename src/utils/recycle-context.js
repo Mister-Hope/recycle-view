@@ -1,7 +1,7 @@
 /* eslint complexity: ["error", {"max": 50}] */
-const recycleData = require('./recycle-data.js')
+const recycleData = require('./recycle-data')
 const recycleViewportChangeFunc = require('./viewport-change-func')
-const transformRpx = require('./transformRpx.js')
+const transformRpx = require('./transformRpx')
 
 const RECT_SIZE = 200
 

@@ -1,5 +1,5 @@
 /* eslint complexity: ["error", {"max": 50}] */
-const recycleData = require('./recycle-data.js')
+const recycleData = require('./recycle-data')
 
 module.exports = function (e, cb) {
   const detail = e.detail
