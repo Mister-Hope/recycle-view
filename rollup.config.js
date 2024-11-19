@@ -11,6 +11,7 @@ export default {
     dir: "./dist",
     format: "esm",
     sourcemap: true,
+    chunkFileNames: "[name].js",
   },
 
   plugins: [
@@ -20,7 +21,4 @@ export default {
       minify: true,
     }),
   ],
-  // treeshake: false,
-  // preserveEntrySignatures: false,
-  // strictDeprecations: true,
 };

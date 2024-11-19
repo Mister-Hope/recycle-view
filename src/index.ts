@@ -1,15 +1,15 @@
 /**
- * recycle-view组件的api使用
- * 提供wx.createRecycleContext进行管理功能
+ * recycle-view 组件的 API 使用
+ * 提供 wx.createRecycleContext 进行管理功能
  */
 import { RecycleContext } from "./utils/recycle-context.js";
 
 /**
- * @params options参数是object对象，展开的结构如下
-      id: recycle-view的id
-      dataKey: recycle-item的wx:for绑定的数据变量
-      page: recycle-view所在的页面或组件的实例
-      itemSize: 函数或者是Object对象，生成每个recycle-item的宽和高
- * @return RecycleContext对象
+ * @params options 参数是 object 对象，展开的结构如下
+      id: recycle-view 的 id
+      dataKey: recycle-item 的 wx:for 绑定的数据变量
+      page: recycle-view 所在的页面或组件的实例
+      itemSize: 函数或者是 object 对象，生成每个 recycle-item 的宽和高
+ * @return RecycleContext 对象
  */
 export const createRecycleContext = (options) => new RecycleContext(options);

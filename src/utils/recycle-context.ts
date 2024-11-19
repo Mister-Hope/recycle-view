@@ -27,9 +27,11 @@ function getValues(item, keys) {
   }
   return vals;
 }
+
 function isArray(arr) {
   return Object.prototype.toString.call(arr) === "[object Array]";
 }
+
 function isSamePureValue(item1, item2) {
   if (typeof item1 !== typeof item2) return false;
   if (isArray(item1) && isArray(item2)) {
@@ -41,6 +43,7 @@ function isSamePureValue(item1, item2) {
   }
   return item1 === item2;
 }
+
 function isSameValue(item1, item2, keys) {
   if (!isArray(keys)) {
     keys = [keys];
@@ -261,7 +264,8 @@ export class RecycleContext<T> {
         });
         // newQueryClass.push(`.` + that.itemSizeOpt.queryClass)
         count = newQueryClass.length;
-        wx.createSelectorQuery()
+        this.page
+          .createSelectorQuery()
           .selectAll(newQueryClass.join(","))
           .boundingClientRect((rect) => {
             if (rect.length < count) return;
@@ -269,7 +273,8 @@ export class RecycleContext<T> {
             setPlaceholderImage();
           })
           .exec();
-        wx.createSelectorQuery()
+        this.page
+          .createSelectorQuery()
           .select("." + this.itemSizeOpt.queryClass)
           .boundingClientRect((rect) => {
             parentRect = rect;
@@ -411,13 +416,8 @@ export class RecycleContext<T> {
       const obj = {};
       obj[itemSize.dataKey] = calcNewItems;
       this.page.setData(obj, () => {
-        // wx.createSelectorQuery().select(itemSize.componentClass).boundingClientRect(rects => {
-        //   compSize = rects;
-        //   if (compSize && allItemSize) {
-        //     sizeReady();
-        //   }
-        // }).exec();
-        wx.createSelectorQuery()
+        this.page
+          .createSelectorQuery()
           .selectAll("." + itemSize.queryClass)
           .boundingClientRect((rects) => {
             sizeReady(rects);

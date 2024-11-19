@@ -17,19 +17,22 @@
   "scripts": {
     "build": "rollup -c rollup.config.js && cpx \"src/**/*.{wxml,wxss,json}\" dist",
     "copy:demo": "cpx \"dist/**/*\" demo/components",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "lint": "prettier --check --write ."
   },
   "files": [
     "dist"
   ],
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^26.0.1",
-    "cpx2": "^7.0.1",
-    "eslint": "^8.57.0",
-    "miniprogram-api-typings": "^3.12.2",
-    "rimraf": "^5.0.7",
-    "rollup": "^4.18.0",
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "cpx2": "^8.0.0",
+    "eslint": "^9.15.0",
+    "miniprogram-api-typings": "^4.0.2",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.27.3",
     "rollup-plugin-esbuild": "^6.1.1",
-    "tsx": "^4.15.5"
-  }
+    "tsx": "^4.19.2"
+  },
+  "packageManager": "pnpm@9.13.2"
 }
